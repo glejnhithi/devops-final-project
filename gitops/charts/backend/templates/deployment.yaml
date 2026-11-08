@@ -11,7 +11,7 @@ spec:
       labels: {app: backend}
     spec:
       imagePullSecrets:
-  {{ toYaml .Values.imagePullSecrets | indent 8 }}
+        {{ toYaml .Values.imagePullSecrets | indent 8 }}
 containers:
   - name: backend
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
