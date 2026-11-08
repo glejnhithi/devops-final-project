@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
   repository: glejnhithi/devops-backend
-  tag: 3945705d3ac60e147daba23166049208c794d3a8
+  tag: 0ced35e45a022ef7538d1698bd9e7e42f2f047df
 imagePullSecrets:
   - name: gitlab-registry
