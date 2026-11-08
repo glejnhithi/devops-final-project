@@ -1,0 +1,58 @@
+name: Build frontend
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: frontend-build-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-frontend:${{ github.sha }}
+      - name: Update GitOps image values
+        env:
+          SHA: ${{ github.sha }}
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import os
+          p = Path('gitops/charts/frontend/values.yaml')
+          lines = p.read_text().splitlines()
+          out = []
+          for line in lines:
+              if line.strip().startswith('repository:'):
+                  line = '  repository: ' + os.environ['DOCKERHUB_USER'] + '/devops-frontend'
+              elif line.strip().startswith('tag:'):
+                  line = '  tag: ' + os.environ['SHA']
+              out.append(line)
+          p.write_text('\n'.join(out) + '\n')
+          PYCODE
+      - name: Commit GitOps image update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gitops/charts/frontend/values.yaml
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore(gitops): update frontend image [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
