@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 3
 image:
   repository: glejnhithi/devops-frontend
   tag: dc9dde9922685028f2901a4428640ade82d88d3b
