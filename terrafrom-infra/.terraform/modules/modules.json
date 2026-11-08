@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"argocd","Source":"./moduls/argocd","Dir":"moduls/argocd"},{"Key":"deploy","Source":"./moduls/deploy","Dir":"moduls/deploy"}]}

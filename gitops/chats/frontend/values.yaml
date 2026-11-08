@@ -1,0 +1,6 @@
+replicaCount: 1
+image:
+  repository: registry.gitlab.com/REPLACE_GROUP/frontend
+  tag: REPLACE_WITH_PUBLISHED_COMMIT_SHA
+imagePullSecrets:
+  - name: gitlab-registry
