@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: REPLACE_WITH_GITOPS_REPO_URL
+    repoURL: https://github.com/glejnhithi/devops-final-project.git
     targetRevision: HEAD
     path: charts/postgres
     helm:

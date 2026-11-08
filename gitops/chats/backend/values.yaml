@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: registry.gitlab.com/REPLACE_GROUP/backend
-  tag: REPLACE_WITH_PUBLISHED_COMMIT_SHA
+  repository: glejnhithi/devops-backend
+  tag: 3945705d3ac60e147daba23166049208c794d3a8
 imagePullSecrets:
   - name: gitlab-registry
