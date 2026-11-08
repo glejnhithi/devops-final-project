@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: root
-  namespace: argocd
+  namespace: argocd-ns
 spec:
   project: default
   source:
     repoURL: https://github.com/glejnhithi/devops-final-project.git
     targetRevision: HEAD
-    path: applications
+    path: gitops/applications
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
