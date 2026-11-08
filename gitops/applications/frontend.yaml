@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/glejnhithi/devops-final-project.git
     targetRevision: HEAD
-    path: charts/frontend
+    path: gitops/charts/frontend
     helm:
       releaseName: frontend
   destination:
