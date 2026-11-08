@@ -7,7 +7,7 @@ on:
       - '.github/workflows/frontend.yml'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: frontend-build-${{ github.ref }}
   cancel-in-progress: false
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          fetch-depth: 1
       - name: Verify frontend directory
         run: |
           echo "Current directory:"
